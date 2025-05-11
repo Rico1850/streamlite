@@ -8,7 +8,77 @@ from datetime import datetime, timedelta
 # Finnhub API key
 FINNHUB_API_KEY = 'd0gamdpr01qhao4sg1n0d0gamdpr01qhao4sg1ng'
 
-st.title('Market Dashboard: Movers, IPOs, and Unicorns')
+# --- Custom CSS for Figma-like style ---
+st.markdown("""
+    <style>
+    body, .stApp { background-color: #0a2342; color: #fff; }
+    .main-title { font-size: 3em; font-weight: bold; margin-bottom: 0.2em; }
+    .subtitle { color: #b0b8c1; font-size: 1.2em; margin-bottom: 2em; }
+    .segment-card {
+        background: #fff;
+        color: #0a2342;
+        border-radius: 18px;
+        padding: 2em 1em;
+        margin: 0.5em;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        font-size: 1.1em;
+        font-weight: 500;
+    }
+    .footer-links a { color: #c6ff8e; margin-right: 1.5em; text-decoration: none; }
+    .get-started-btn {
+        background: #c6ff8e;
+        color: #0a2342;
+        border-radius: 8px;
+        padding: 0.7em 2em;
+        font-weight: bold;
+        border: none;
+        margin-left: 2em;
+        font-size: 1.1em;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# --- Header ---
+st.markdown("""
+<div style="display: flex; align-items: center; justify-content: space-between;">
+    <div style="display: flex; align-items: center;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Bitmap_Icon_Home.png" height="40" style="margin-right: 1em;">
+        <span style="font-size: 1.5em; font-weight: bold;">J & J Holdings</span>
+    </div>
+    <button class="get-started-btn">Get started</button>
+</div>
+""", unsafe_allow_html=True)
+
+# --- Main layout ---
+col1, col2 = st.columns([1, 1.2])
+with col1:
+    st.markdown('<div class="main-title">Next Age<br>Private Equity</div>', unsafe_allow_html=True)
+    st.markdown('<div class="subtitle">Expanding communities from the ground up</div>', unsafe_allow_html=True)
+    st.markdown("**Segments**")
+    seg_col1, seg_col2, seg_col3 = st.columns(3)
+    with seg_col1:
+        st.markdown('<div class="segment-card">Instant Productivity</div>', unsafe_allow_html=True)
+    with seg_col2:
+        st.markdown('<div class="segment-card">Expense Management</div>', unsafe_allow_html=True)
+    with seg_col3:
+        st.markdown('<div class="segment-card">Advanced Technology</div>', unsafe_allow_html=True)
+
+with col2:
+    st.image("https://images.unsplash.com/photo-1519125323398-675f0ddb6308", use_column_width=True)
+    # For floating badges, you would need to use custom HTML/CSS or overlay images
+
+# --- Footer ---
+st.markdown("""
+<div class="footer-links" style="margin-top: 3em;">
+    <a href="#">Contact</a>
+    <a href="#">Social</a>
+    <a href="#">Address</a>
+    <a href="#">Legal Terms</a>
+</div>
+""", unsafe_allow_html=True)
+
+st.caption('Data sources: Nasdaq, NYSE, AMEX, yfinance, Finnhub')
 
 # --- 1. User-Selectable Market/Exchange ---
 market_options = ['Nasdaq', 'NYSE', 'AMEX', 'All']
@@ -100,6 +170,4 @@ try:
     else:
         st.info('No IPOs found for the coming week.')
 except Exception as e:
-    st.error(f'Error fetching IPO data: {e}')
-
-st.caption('Data sources: Nasdaq, NYSE, AMEX, yfinance, Finnhub, CB Insights/Wikipedia (unicorns)') 
+    st.error(f'Error fetching IPO data: {e}') 
