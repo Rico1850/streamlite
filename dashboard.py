@@ -72,11 +72,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # --- Header ---
-col1, col2 = st.columns([1, 8])
-with col1:
-    st.image('C:/Users/chris/OneDrive/Desktop/Cursor Projects/Valuations projects/jj.png', width=60)
-with col2:
-    st.markdown('<span style="font-size: 1.5em; font-weight: bold;">J & J Holdings</span>', unsafe_allow_html=True)
+st.markdown('<span style="font-size: 1.5em; font-weight: bold;">J & J Holdings</span>', unsafe_allow_html=True)
 st.markdown('<button class="get-started-btn">Get started</button>', unsafe_allow_html=True)
 
 
