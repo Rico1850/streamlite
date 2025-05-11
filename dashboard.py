@@ -11,9 +11,12 @@ FINNHUB_API_KEY = 'd0gamdpr01qhao4sg1n0d0gamdpr01qhao4sg1ng'
 # --- Custom CSS for Figma-like style ---
 st.markdown("""
     <style>
-    body, .stApp { background-color: #0a2342; color: #fff; }
+    body, .stApp { background-color: #0a2342; color: #f8f9fa; }
+    .main-title, .subtitle, .segment-card, .footer-links a, .stMarkdown, .stText, .stHeader, .stSubheader {
+        color: #f8f9fa !important;
+    }
     .main-title { font-size: 3em; font-weight: bold; margin-bottom: 0.2em; }
-    .subtitle { color: #b0b8c1; font-size: 1.2em; margin-bottom: 2em; }
+    .subtitle { color: #ffffff; font-size: 1.2em; margin-bottom: 2em; }
     .segment-card {
         background: #fff;
         color: #0a2342;
@@ -36,49 +39,46 @@ st.markdown("""
         margin-left: 2em;
         font-size: 1.1em;
     }
+    /* Make all selectbox text and dropdown options white, with dark background */
+    .stSelectbox label, .stSelectbox span, .stSelectbox div, .stSelectbox input {
+        color: #fff !important;
+    }
+    div[data-baseweb="select"] * {
+        color: #fff !important;
+        background-color: #0a2342 !important;
+    }
+    div[data-baseweb="select"] [role="option"] {
+        color: #fff !important;
+        background-color: #0a2342 !important;
+    }
+    div[data-baseweb="select"] [role="listbox"] {
+        background-color: #0a2342 !important;
+    }
+    /* Make st.slider text and ticks white */
+    .stSlider label, .stSlider span, .stSlider div, .stSlider input {
+        color: #fff !important;
+    }
+    .stSlider .css-1aumxhk, .stSlider .css-14xtw13, .stSlider .css-1y4p8pa {
+        color: #fff !important;
+    }
+    /* Make st.radio text and options white */
+    .stRadio label, .stRadio span, .stRadio div, .stRadio input {
+        color: #fff !important;
+    }
+    .stRadio .css-1c7y2kd, .stRadio .css-16idsys, .stRadio .css-1ofqig9 {
+        color: #fff !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
 # --- Header ---
-st.markdown("""
-<div style="display: flex; align-items: center; justify-content: space-between;">
-    <div style="display: flex; align-items: center;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Bitmap_Icon_Home.png" height="40" style="margin-right: 1em;">
-        <span style="font-size: 1.5em; font-weight: bold;">J & J Holdings</span>
-    </div>
-    <button class="get-started-btn">Get started</button>
-</div>
-""", unsafe_allow_html=True)
-
-# --- Main layout ---
-col1, col2 = st.columns([1, 1.2])
+col1, col2 = st.columns([1, 8])
 with col1:
-    st.markdown('<div class="main-title">Next Age<br>Private Equity</div>', unsafe_allow_html=True)
-    st.markdown('<div class="subtitle">Expanding communities from the ground up</div>', unsafe_allow_html=True)
-    st.markdown("**Segments**")
-    seg_col1, seg_col2, seg_col3 = st.columns(3)
-    with seg_col1:
-        st.markdown('<div class="segment-card">Instant Productivity</div>', unsafe_allow_html=True)
-    with seg_col2:
-        st.markdown('<div class="segment-card">Expense Management</div>', unsafe_allow_html=True)
-    with seg_col3:
-        st.markdown('<div class="segment-card">Advanced Technology</div>', unsafe_allow_html=True)
-
+    st.image('C:/Users/chris/OneDrive/Desktop/Cursor Projects/Valuations projects/jj.png', width=60)
 with col2:
-    st.image("https://images.unsplash.com/photo-1519125323398-675f0ddb6308", use_column_width=True)
-    # For floating badges, you would need to use custom HTML/CSS or overlay images
+    st.markdown('<span style="font-size: 1.5em; font-weight: bold;">J & J Holdings</span>', unsafe_allow_html=True)
+st.markdown('<button class="get-started-btn">Get started</button>', unsafe_allow_html=True)
 
-# --- Footer ---
-st.markdown("""
-<div class="footer-links" style="margin-top: 3em;">
-    <a href="#">Contact</a>
-    <a href="#">Social</a>
-    <a href="#">Address</a>
-    <a href="#">Legal Terms</a>
-</div>
-""", unsafe_allow_html=True)
-
-st.caption('Data sources: Nasdaq, NYSE, AMEX, yfinance, Finnhub')
 
 # --- 1. User-Selectable Market/Exchange ---
 market_options = ['Nasdaq', 'NYSE', 'AMEX', 'All']
@@ -140,7 +140,7 @@ if stock_type == 'Biggest 30-day winners':
     st.dataframe(df_perf.head(10).reset_index(drop=True), height=400)
 elif stock_type == 'Biggest 30-day losers':
     st.subheader('Biggest 30-day Losers')
-    st.dataframe(df_perf.tail(10).sort_values('30d % Change').reset_index(drop=True), height=400)
+    st.dataframe(df_perf[df_perf['30d % Change'].notna()].tail(10).sort_values('30d % Change').reset_index(drop=True), height=400)
 else:
     st.subheader('All Analyzed Stocks (Sortable)')
     page_size = 25
